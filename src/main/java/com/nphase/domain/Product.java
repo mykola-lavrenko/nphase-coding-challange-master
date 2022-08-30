@@ -12,10 +12,16 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+
     @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String category;
+
     @Column(nullable = false)
     private BigDecimal pricePerUnit;
+
     @Column
     private int quantity;
 
@@ -27,6 +33,10 @@ public class Product implements Serializable {
         return name;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
     public BigDecimal getPricePerUnit() {
         return pricePerUnit;
     }
@@ -35,14 +45,7 @@ public class Product implements Serializable {
         return quantity;
     }
 
-    public BigDecimal getProductTotalPrice(final int discountCount, @Nonnull final BigDecimal discount) {
-        BigDecimal totalPrice;
-        if (quantity > discountCount) {
-            totalPrice = pricePerUnit.multiply(BigDecimal.valueOf(quantity))
-                    .multiply(BigDecimal.ONE.subtract(discount));
-        } else {
-            totalPrice = pricePerUnit.multiply(BigDecimal.valueOf(quantity));
-        }
-        return totalPrice;
+    public BigDecimal getProductTotalPrice() {
+        return pricePerUnit.multiply(BigDecimal.valueOf(quantity));
     }
 }

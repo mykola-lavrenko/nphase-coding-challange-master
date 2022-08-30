@@ -25,7 +25,7 @@ class ShoppingCartServiceTest {
     private UserRepository userRepository;
 
     @ParameterizedTest(name = "calculateTotalPrice should return shopping cart total price={1} when user id={0}")
-    @CsvSource({"1, 16.5", "2, 0", "3, 33"})
+    @CsvSource({"1, 16.5", "2, 0", "3, 31.95", "4, 31.84"})
     void calculateTotalPrice(Long userId, BigDecimal expectedTotalPrice) {
         final User user = userRepository.findById(userId).orElseThrow(AssertionError::new);
 
