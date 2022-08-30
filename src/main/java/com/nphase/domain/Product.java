@@ -1,5 +1,6 @@
 package com.nphase.domain;
 
+import javax.annotation.Nonnull;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -34,7 +35,14 @@ public class Product implements Serializable {
         return quantity;
     }
 
-    public BigDecimal getProductTotalPrice() {
-        return pricePerUnit.multiply(BigDecimal.valueOf(quantity));
+    public BigDecimal getProductTotalPrice(final int discountCount, @Nonnull final BigDecimal discount) {
+        BigDecimal totalPrice;
+        if (quantity > discountCount) {
+            totalPrice = pricePerUnit.multiply(BigDecimal.valueOf(quantity))
+                    .multiply(BigDecimal.ONE.subtract(discount));
+        } else {
+            totalPrice = pricePerUnit.multiply(BigDecimal.valueOf(quantity));
+        }
+        return totalPrice;
     }
 }
